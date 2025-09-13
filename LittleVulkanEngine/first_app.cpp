@@ -35,12 +35,7 @@ void FirstApp::run() {
   while (!lveWindow.shouldClose()) {
     glfwPollEvents();
 
-    std::cout << "in progress: " << lveRenderer.isFrameInProgress() << std::endl;
-    // std::cout << "in progress: " << std::boolalpha
-    //       << lveRenderer.isFrameInProgress() << std::endl;
-
     if (auto commandBuffer = lveRenderer.beginFrame()) {
-        std::cout << "BeginFrame, rendering..." << std::endl;
         lveRenderer.beginSwapChainRenderPass(commandBuffer);
         simpleRenderSystem.renderGameObjects(commandBuffer, gameObjects);
         lveRenderer.endSwapChainRenderPass(commandBuffer);
