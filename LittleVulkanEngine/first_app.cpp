@@ -64,26 +64,14 @@ void FirstApp::loadGameObjects() {
       {{-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}}};
   auto lveModel = std::make_shared<LveModel>(lveDevice, vertices);
 
-  std::vector<glm::vec3> colors{
-    {1.f, .7f, .73f},
-    {1.f, .87f, .73f},
-    {1.f, 1.f, .73f},
-    {.73f, 1.f, .8f},
-    {.73f, .88f, 1.f},
-  };
+  auto triangle = LveGameObject::createGameObject();
+  triangle.model = lveModel;
+  triangle.color = {.1f, .8f, .1f};
+  triangle.transform2d.translation.x = .2f;
+  triangle.transform2d.scale = {2.f, .5f};
+  triangle.transform2d.rotation = .25f * glm::two_pi<float>();
 
-  for (auto& color : colors) {
-    color = glm::pow(color, glm::vec3{2.2f});
-  }
-
-  for (int i = 0; i < 40; i++) {
-    auto triangle = LveGameObject::createGameObject();
-    triangle.model = lveModel;
-    triangle.transform2d.scale = glm::vec2(.5f) + i * 0.025f;
-    triangle.transform2d.rotation = i * glm::pi<float>() * .025f;
-    triangle.color = colors[i % colors.size()];
-    gameObjects.push_back(std::move(triangle));
-  }
+  gameObjects.push_back(std::move(triangle));
 }
 
 void FirstApp::createPipelineLayout() {
@@ -208,17 +196,11 @@ void FirstApp::recordCommandBuffer(int imageIndex) {
 }
 
 void FirstApp::renderGameObjects(VkCommandBuffer commandBuffer) {
-  int i = 0;
-  for (auto& obj : gameObjects) {
-    i += 1;
-    obj.transform2d.rotation = 
-        glm::mod<float>(obj.transform2d.rotation + 0.001f * i, 2.f * glm::pi<float>());
-  }
-
-
   lvePipeline->bind(commandBuffer);
 
   for (auto& obj : gameObjects) {
+    obj.transform2d.rotation = glm::mod(obj.transform2d.rotation + 0.01f, glm::two_pi<float>());
+
     SimplePushConstantData push{};
     push.offset = obj.transform2d.translation;
     push.color = obj.color;
