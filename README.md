@@ -10,6 +10,7 @@
 ## CMake commands
 * cmake --build build
 * cmake --build build --target run
+* cmake --build build --target clean
 
 ## LLDB
 Build:
