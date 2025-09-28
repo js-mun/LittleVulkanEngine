@@ -122,6 +122,7 @@
     "stop_token": "cpp",
     "thread": "cpp",
     "variant": "cpp",
-    "format": "cpp"
+    "format": "cpp",
+    "cassert": "cpp"
 }
 }
