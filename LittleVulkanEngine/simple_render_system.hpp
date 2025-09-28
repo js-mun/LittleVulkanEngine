@@ -19,7 +19,7 @@ class SimpleRenderSystem {
   SimpleRenderSystem &operator=(const SimpleRenderSystem &) = delete;
 
   void renderGameObjects(
-    VkCommandBuffer commandBuffer, 
+    VkCommandBuffer commandBuffer,
     std::vector<LveGameObject> &gameObjects,
     const LveCamera &camera);
 
