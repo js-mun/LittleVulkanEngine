@@ -9,7 +9,7 @@ file(COPY ${CMAKE_SOURCE_DIR}/models DESTINATION ${CMAKE_BINARY_DIR})
 
 file(GLOB SOURCES "*.cpp")
 
-include_directories(${CMAKE_SOURCE_DIR}/external)
+include_directories(${CMAKE_SOURCE_DIR}/external/tinyobjloader)
 
 add_executable(a.out ${SOURCES})
 
