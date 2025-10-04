@@ -78,8 +78,8 @@ void FirstApp::run() {
         // update
         GlobalUbo ubo{};
         ubo.projectionView = camera.getProjection() * camera.getView();
-        // globalUboBuffer.writeToBuffer(&ubo, frameIndex);
-        // globalUboBuffer.flushIndex(frameIndex);
+        globalUboBuffer.writeToBuffer(&ubo, frameIndex);
+        globalUboBuffer.flushIndex(frameIndex);
         
         // render
         lveRenderer.beginSwapChainRenderPass(commandBuffer);
