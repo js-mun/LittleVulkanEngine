@@ -39,9 +39,11 @@ void FirstApp::run() {
     LveSwapChain::MAX_FRAMES_IN_FLIGHT,
     VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
     VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+    64, // fix by magic number
     // lveDevice.properties.limits.nonCoherentAtomSize, // -> fix by chat gpt
-    lveDevice.properties.limits.minUniformBufferOffsetAlignment, // -> Sample code
+    // lveDevice.properties.limits.minUniformBufferOffsetAlignment, // -> Sample code // returned 4 for my pc. expected to return 16~256 
   };
+
   globalUboBuffer.map();
 
   SimpleRenderSystem simpleRenderSystem{lveDevice, lveRenderer.getSwapChainRenderPass()};
@@ -76,8 +78,8 @@ void FirstApp::run() {
         // update
         GlobalUbo ubo{};
         ubo.projectionView = camera.getProjection() * camera.getView();
-        globalUboBuffer.writeToBuffer(&ubo, frameIndex);
-        globalUboBuffer.flushIndex(frameIndex);
+        // globalUboBuffer.writeToBuffer(&ubo, frameIndex);
+        // globalUboBuffer.flushIndex(frameIndex);
         
         // render
         lveRenderer.beginSwapChainRenderPass(commandBuffer);
